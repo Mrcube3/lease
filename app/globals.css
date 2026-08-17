@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sci-fi-backdrop {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103, 232, 249, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 232, 249, 0.08) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(250, 204, 21, 0.08), transparent 36%);
+  background-position:
+    0 0,
+    0 0,
+    center;
+  background-size:
+    44px 44px,
+    44px 44px,
+    100% 100%;
+  opacity: 0.55;
+  animation: drift-grid 28s linear infinite;
+}
+
+.sci-fi-backdrop::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: linear-gradient(
+    180deg,
+    transparent,
+    rgba(52, 211, 153, 0.08),
+    transparent
+  );
+  background-size: 100% 280px;
+  opacity: 0.45;
+  animation: scan-bands 18s ease-in-out infinite;
+}
+
+.sci-fi-scan {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 9px,
+    rgba(255, 255, 255, 0.025) 10px
+  );
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.sci-fi-line-strips {
+  position: absolute;
+  inset: -8%;
+  overflow: hidden;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.sci-fi-line-strips::before,
+.sci-fi-line-strips::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-repeat: no-repeat;
+  filter: blur(0.2px);
+}
+
+.sci-fi-line-strips::before {
+  background-image:
+    linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.72), transparent),
+    linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.42), transparent);
+  background-position:
+    8% 22%,
+    64% 72%;
+  background-size:
+    42% 1px,
+    30% 1px;
+  animation: blue-strip-shift 12s ease-in-out infinite;
+}
+
+.sci-fi-line-strips::after {
+  background-image:
+    linear-gradient(90deg, transparent, rgba(248, 113, 113, 0.58), transparent),
+    linear-gradient(90deg, transparent, rgba(248, 113, 113, 0.34), transparent);
+  background-position:
+    55% 32%,
+    18% 82%;
+  background-size:
+    36% 1px,
+    24% 1px;
+  animation: red-strip-shift 14s ease-in-out infinite;
+}
+
+@keyframes drift-grid {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      center;
+  }
+  to {
+    background-position:
+      44px 44px,
+      44px 44px,
+      center;
+  }
+}
+
+@keyframes blue-strip-shift {
+  0%,
+  100% {
+    transform: translate3d(-8px, 0, 0);
+  }
+  50% {
+    transform: translate3d(14px, 3px, 0);
+  }
+}
+
+@keyframes red-strip-shift {
+  0%,
+  100% {
+    transform: translate3d(10px, 2px, 0);
+  }
+  50% {
+    transform: translate3d(-12px, -2px, 0);
+  }
+}
+
+@keyframes scan-bands {
+  0%,
+  100% {
+    transform: translateY(-10%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sci-fi-backdrop,
+  .sci-fi-backdrop::after,
+  .sci-fi-line-strips::before,
+  .sci-fi-line-strips::after {
+    animation: none;
+  }
+}
